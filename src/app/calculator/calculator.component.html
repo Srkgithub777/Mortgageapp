@@ -1,0 +1,61 @@
+<div class="row loanContainer">
+  <div class="col-lg-8">
+    <h2 class="theme-color">EPS MORTGAGE CALCULATOR</h2>
+    <div class="container">
+      <form
+        style="display: grid"
+        [formGroup]="form"
+        (ngSubmit)="saveDetails(form)">
+        <mat-form-field appearance="standard">
+          <mat-label>Amount of Loan</mat-label>
+          <input
+            matInput
+            type="text"
+            mask="999999999.00"
+            (focusout)="onFocusOutEvent($event, 'loanAmount')"
+            placeholder="Enter Loan Amount"
+            formControlName="loanAmount"
+            #loanAmountInput/>
+          <!-- <mat-hint>Mini character 12: {{ loanAmountInput.value.length }}/12</mat-hint> -->
+          <mat-error *ngIf="form.get('loanAmount')?.errors">Enter Valid Amount</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="legacy">
+          <mat-label>Length of Loan in Years</mat-label>
+          <input matInput type="text" mask="99" formControlName="loanYears"
+          placeholder="Loan Years">
+          <mat-error *ngIf="form.get('loanYears')?.errors">Enter Valid Year</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="standard">
+          <mat-label>Interest Rate</mat-label>
+          <input
+            matInput
+            type="text"
+            mask="99.00"
+            (focusout)="onFocusOutEvent($event, 'interestRate')"
+            formControlName="interestRate"
+            placeholder="Interest Rate"/>
+          <mat-error *ngIf="form.get('interestRate')?.errors">Enter Valid Value</mat-error>
+        </mat-form-field>
+
+        <div mat-dialog-actions align="center">
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="!form.valid">
+            Calculate
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="col-lg-4 my-auto p-4 amountDiv">
+    <span>Your monthly payment will be</span> <br />
+    <h3 class="p-3 theme-color">{{ totalAmount }}</h3> <br>
+
+    <span *ngIf="EPSPCOM_ERRMSG">EPSPCOM Error Message</span> <br/>
+    <h6 *ngIf="EPSPCOM_ERRMSG" class="p-3 theme-color" style="font-size: 13px;">{{ EPSPCOM_ERRMSG }}</h6>
+  </div>
+</div>
