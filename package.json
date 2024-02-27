@@ -11,13 +11,7 @@
     "start": "ng serve",
     "build": "ssr",
     "prod": "ng build --prod mortgageapp && ng run mortgageapp:server:production",
-	"test": "ng test",
-	"dev": "nodemon server/server.js",
-    "start": "node server/server.js",
-    "check-coverage": "nyc report --check-coverage --lines 100",
-    "lint": "eslint --ignore-path .gitignore .",
-    "fix": "eslint --ignore-path .gitignore . --fix",
-    "test": "nyc mocha test --recursive --exit"
+	"test": "ng test"
   },
   "private": true,
   "dependencies": {
@@ -36,11 +30,7 @@
     "ngx-mask": "^14.0.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.11.4",
-	"body-parser": "^1.20.2",
-    "express": "^4.18.2",
-    "ibm-cloud-env": "^0",
-    "swagger-ui-express": "^5.0.0"
+    "zone.js": "~0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^14.0.0",
@@ -53,16 +43,6 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
-    "typescript": "~4.7.2",
-	"chai": "^4.3.10",
-    "eslint": "^8.51.0",
-    "eslint-config-strongloop": "^2.1.0",
-    "husky": "^8.0.3",
-    "mocha": "^10.2.0",
-    "nodemon": "^3.0.1",
-    "nyc": "^15.1.0",
-    "sinon": "^16.1.0",
-    "sinon-chai": "^3.7.0",
-    "supertest": "^6.3.3"
+    "typescript": "~4.7.2"
   }
   }
