@@ -1,6 +1,6 @@
 {
   "name": "mortgage-calculator",
-  "version": "0.0.0"
+  "version": "0.0.0",
   "description": "Start building your next Node.js Express app on IBM Cloud.",
   "private": true,
   "engines": {
