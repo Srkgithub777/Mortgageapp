@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "build": "ssr",
-    "watch": "ng build --prod mortgageapp && ng run mortgageapp:server:production",
+    "prod": "ng build --prod mortgageapp && ng run mortgageapp:server:production",
   },
   "private": true,
   "dependencies": {
