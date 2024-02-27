@@ -11,7 +11,7 @@ COPY package*.json ./
 RUN npm install -g @angular/cli
 
 #### install project dependencies
-RUN npm install
+RUN npm ci
 
 #### copy things
 COPY . .
