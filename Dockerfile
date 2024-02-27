@@ -1,19 +1,32 @@
-FROM registry.access.redhat.com/ubi8/nodejs-20
+### STAGE 1: Build ###
+FROM node:lts-alpine AS build
 
-USER 0
-RUN fix-permissions ./
-USER 1001
+#### make the 'app' folder the current working directory
+WORKDIR /usr/src/app
 
-RUN mkdir ./app
-WORKDIR $HOME/app
-COPY package.json .
-RUN npm install --omit=dev
-COPY server ./server
-COPY public ./public
+#### copy both 'package.json' and 'package-lock.json' (if available)
+COPY package*.json ./
 
-ENV NODE_ENV production
-ENV PORT 3000
+#### install angular cli
+RUN npm install -g @angular/cli
 
-EXPOSE 3000
+#### install project dependencies
+RUN npm install
 
-CMD ["node", "server/server.js"]
+#### copy things
+COPY . .
+
+#### generate build --prod
+RUN npm run build:ssr
+
+### STAGE 2: Run ###
+FROM nginxinc/nginx-unprivileged
+
+#### copy nginx conf
+COPY ./config/nginx.conf /etc/nginx/conf.d/default.conf
+
+#### copy artifact build from the 'build environment'
+COPY --from=build /usr/src/app/dist/vitorspace/browser /usr/share/nginx/html
+
+#### don't know what this is, but seems cool and techy
+CMD ["nginx", "-g", "daemon off;"]
