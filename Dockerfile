@@ -17,7 +17,7 @@ RUN npm ci
 COPY . .
 
 #### generate build --prod
-RUN npm run build:ssr
+####RUN npm run build:ssr
 
 ### STAGE 2: Run ###
 FROM nginxinc/nginx-unprivileged
