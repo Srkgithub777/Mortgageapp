@@ -1,9 +1,28 @@
-FROM nginx:1.13.3-alpine
-## Copy our nginx config
-COPY nginx/ /etc/nginx/conf.d/
-## Remove default nginx website
-RUN rm -rf /usr/share/nginx/html/* && chmod -R 777 /var/log/nginx /var/cache/nginx/ && chmod -R 777 /etc/nginx/* && chmod -R 777 /var/run/ && chmod -R 777 /usr/share/nginx/
-## copy over the artifacts in dist folder to default nginx public folder
-COPY dist/mortgage-calculator /usr/share/nginx/html
-EXPOSE 8080
+WORKDIR /usr/src/app
+
+#### copy both 'package.json' and 'package-lock.json' (if available)
+COPY package*.json ./
+
+#### install angular cli
+RUN npm install -g @angular/cli
+
+#### install project dependencies
+RUN npm ci
+
+#### copy things
+COPY . .
+
+#### generate build --prod
+RUN npm run build:ssr
+
+### STAGE 2: Run ###
+FROM nginxinc/nginx-unprivileged
+
+#### copy nginx conf
+COPY ./config/nginx.conf /etc/nginx/conf.d/default.conf
+
+#### copy artifact build from the 'build environment'
+COPY --from=build /usr/src/dist/mortgage-calculator /usr/share/nginx/html
+
+#### don't know what this is, but seems cool and techy
 CMD ["nginx", "-g", "daemon off;"]
