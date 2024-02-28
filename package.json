@@ -8,7 +8,6 @@
 },
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
     "build": "ssr",
     "prod": "ng build --prod mortgageapp && ng run mortgageapp:server:production",
 	"test": "ng test"
